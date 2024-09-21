@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <windows.h>
-#include <conio.h> 
+#include <cstring> 
 using namespace std;
 
 string Passwort;
@@ -44,8 +44,22 @@ int feld() {
 }
 
 int usernames() {
+
+	// Name vom Start in char Array
+	const int länge = Name.length();
+
+	const char* Name_Array = Name.c_str();
+
+	// Coole Animation vom ersten Spielernamen..
+
 	cout << endl << "Spielername 1: ";
-	cin >> User1;
+	Sleep(500);
+
+	for (int a = 0; a < länge; a++)
+	{
+		cout << Name_Array[a];
+		Sleep(50);
+	}
 
 	cout << endl << "Spielername 2: ";
 	cin >> User1;

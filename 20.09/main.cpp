@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <windows.h>
+#include <conio.h> 
 using namespace std;
 
 string Passwort;
@@ -9,16 +10,23 @@ string Name;
 
 string User1;
 string User2;
+string activeUser;
 
-int Zeile;
-int Spalte;
-
+int ID;
 int Zug;
-int win = 0;
+
+bool tie = false;
+
+char symbol;
 
 int iLade;
 
-char feldID[3][3] = { {'0', '1' , '2'}, {'0', '1' , '2'}, {'0', '1', '2'} };
+int i1;
+int i2;
+
+int rewrite = 0;
+
+char feldID[3][3] = { {'1', '2' , '3'}, {'4', '5' , '6'}, {'7', '8', '9'} };
 
 int welcome(string Title) {
 	cout << Title << endl << "---------------------" << endl << "Willkommen " << Name;
@@ -49,6 +57,121 @@ int usernames() {
 	return 1;
 }
 
+int eingabe() {
+	if (Zug % 2 == 0) {
+		symbol = 'X';
+	} if (Zug % 2 == 1) {
+		symbol = 'O';
+	}
+
+	if (ID == 1) {
+		if (feldID[0][0] == 'X' || feldID[0][0] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[0][0] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 2) {
+		if (feldID[0][1] == 'X' || feldID[0][1] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[0][1] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 3) {
+		if (feldID[0][2] == 'X' || feldID[0][2] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[0][2] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 4) {
+		if (feldID[1][0] == 'X' || feldID[1][0] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[1][0] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 5) {
+		if (feldID[1][1] == 'X' || feldID[1][1] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[1][1] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 6) {
+		if (feldID[1][2] == 'X' || feldID[1][2] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[1][2] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 7) {
+		if (feldID[2][0] == 'X' || feldID[2][0] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[2][0] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 8) {
+		if (feldID[2][1] == 'X' || feldID[2][1] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[2][1] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	} if (ID == 9) {
+		if (feldID[2][2] == 'X' || feldID[2][2] == 'O') {
+			rewrite = 1;
+			return 0;
+		}
+		feldID[2][2] = { symbol };
+		if (rewrite == 1) {
+			rewrite = 0;
+		}
+	}
+
+	return 1;
+}
+
+bool winCheck() {
+	for (int g = 0; g < 3; g++) {
+		if (feldID[g][0] == feldID[g][1] && feldID[g][0] == feldID[g][2] || feldID[0][g] == feldID[1][g] && feldID[0][g] == feldID[2][g]) {
+			return true;
+		}
+	}
+	if (feldID[0][0] == feldID[1][1] && feldID[1][1] == feldID[2][2] || feldID[0][2] == feldID[1][1] && feldID[1][1] == feldID[2][0]) {
+		return true;
+	}
+	
+	for (int g = 0; g < 3; g++) {
+		for (int h = 0; h < 3; h++) {
+			if (feldID[g][h] != 'X' && feldID[g][h] != 'O') {
+				return false;
+			}
+		}
+	}
+	tie = true;
+	return false;
+}
+
+
 int main(void) {
 	cout << "Passwort: ";
 	cin >> Passwort;
@@ -62,14 +185,14 @@ int main(void) {
 	cout << endl << "Dein Name: ";
 	cin >> Name;
 
-	system("clear");
+	system("cls");
 
 	welcome("Tic Tac Toe");
 
 	cout << endl << endl;
 	system("PAUSE");
 
-	system("clear");
+	system("cls");
 
 	do {
 		cout << "Lade";
@@ -83,43 +206,57 @@ int main(void) {
 
 		cout << ".";
 		Sleep(100);
-		system("clear");
+		system("cls");
 
 		iLade++;
 	} while (iLade <= 5);
 
 	Sleep(1500);
 
-	system("clear");
+	system("cls");
 
 	cout << "Dies ist das Spielfeld: " << endl;
 	Sleep(1000);
 	feld();
 
-	cout << endl << endl << "Lass und losstarten!";
+	cout << endl << endl << "Lass und losstarten!" << endl << endl;
 	system("PAUSE");
 
-	system("clear");
+	system("cls");
 	usernames();
-	system("clear");
+	system("cls");
 
-	Zug = 0;
+	Zug = 4;
 
 	do {
 		feld();
 
-		cout << endl << endl << "Spieler " << Zug % 2 << " setzt: " << endl << "Zeile: ";
-		cin >> Zeile;
-		cout << "Spalte: ";
-		cin >> Spalte;
+		if (Zug % 2 == 0) {
+			activeUser = User1;
+		} if (Zug % 2 == 1) {
+			activeUser = User2;
+		}
 
-		char feldID[Zeile][Spalte] = { 'X' };
+		do {
+			if (rewrite == 1) {
+				cout << endl << endl << "Das Fleld ist bereits besetzt!";
+				Sleep(1000);
+			}
 
-		system("clear");
+			cout << endl << endl << "Spieler " << activeUser << " setzt: ";
+			cin >> ID;
+
+			eingabe();
+		} while (rewrite == 1);
+
+		winCheck();
+		system("cls");
 		Zug++;
-	} while (win == 0);
+	} while (!winCheck());
 
-	
+	system("cls");
+
+	cout << activeUser << " gewinnt!" << endl << endl << endl;
 
 	return 1;
 }

@@ -8,9 +8,10 @@ using namespace std;
 string Passwort;
 string Name;
 
-string User1;
-string User2;
+string Gegner;
 string activeUser;
+
+int activeUserID;
 
 int ID;
 int Zug;
@@ -62,7 +63,7 @@ int usernames() {
 	}
 
 	cout << endl << "Spielername 2: ";
-	cin >> User1;
+	cin >> Gegner;
 
 	cout << endl << endl << "Los gehts!";
 
@@ -245,10 +246,12 @@ int main(void) {
 	do {
 		feld();
 
-		if (Zug % 2 == 0) {
-			activeUser = User1;
-		} if (Zug % 2 == 1) {
-			activeUser = User2;
+		activeUserID = Zug % 2;
+
+		if (activeUserID == 0) {
+			activeUser = Name;
+		} else if (activeUserID == 1) {
+			activeUser = Gegner;
 		}
 
 		do {
@@ -270,7 +273,9 @@ int main(void) {
 
 	system("cls");
 
-	cout << activeUser << " gewinnt!" << endl << endl << endl;
+	cout << endl << endl << endl << activeUser << " gewinnt!" << endl << endl << endl;
+
+	Sleep(5000);
 
 	return 1;
 }
